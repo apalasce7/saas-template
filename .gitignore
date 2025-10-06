@@ -1,0 +1,24 @@
+# Ignorar dependencias
+node_modules
+
+# Ignorar logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# Ignorar archivos de variables de entorno
+.env
+.env*.local
+
+# Ignorar carpetas de build y caché
+.next/
+.turbo/
+dist/
+build/
+
+# Ignorar archivos del sistema operativo
+.DS_Store
+Thumbs.db

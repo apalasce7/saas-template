@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+data:
+  # URL de la base de datos para Prisma
+  # El nombre 'postgres-service' correspondería al nombre de un servicio de Kubernetes
+  # que apunta a la base de datos PostgreSQL.
+  DATABASE_URL: "postgresql://user:password@postgres-service:5432/mydatabase?schema=public"
+
+  # URL del servidor Redis para BullMQ
+  # El nombre 'redis-service' correspondería al servicio de Kubernetes para Redis.
+  REDIS_URL: "redis://redis-service:6379"
