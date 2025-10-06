@@ -102,6 +102,22 @@ Este único comando descargará e instalará todo lo necesario para todas las ap
 pnpm install
 ```
 
+### Paso 3.5: Generar el Cliente de Base de Datos
+
+Este es un paso crucial. Genera el código que Prisma utiliza para comunicarse con la base de datos de forma segura.
+
+```bash
+pnpm --filter api exec prisma generate
+```
+
+### Paso 3.6: Aplicar las Migraciones a la Base de Datos
+
+Este comando crea las tablas (User, Project, etc.) en tu base de datos Docker.
+
+```bash
+pnpm --filter api exec prisma migrate dev
+```
+
 ### Paso 4: ¡Levantar el entorno!
 
 Necesitarás tener **3 terminales abiertas** al mismo tiempo. Cada una se encargará de un servicio vital.

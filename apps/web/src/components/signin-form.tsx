@@ -32,7 +32,7 @@ export function SignInForm() {
       }
 
       const { access_token } = await response.json()
-      localStorage.setItem('token', access_token)
+      document.cookie = `token=${access_token}; path=/; max-age=86400; SameSite=Strict`
       
       window.location.href = '/dashboard'
     } catch (err: any) {

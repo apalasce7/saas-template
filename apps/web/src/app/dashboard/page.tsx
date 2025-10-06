@@ -28,6 +28,11 @@ interface Project {
   createdAt: string
 }
 
+const getCookie = (name: string): string | undefined => {
+  const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+  if (match) return match[2];
+};
+
 export default function DashboardPage() {
   const [projects, setProjects] = useState<Project[]>([])
   const [loading, setLoading] = useState(true)
@@ -35,14 +40,19 @@ export default function DashboardPage() {
   const [newProjectName, setNewProjectName] = useState('')
   const [isDialogOpen, setIsDialogOpen] = useState(false)
 
+  const handleLogout = () => {
+    document.cookie = 'token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT'
+    window.location.href = '/signin'
+  }
+
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const token = localStorage.getItem('token')
+        const token = getCookie('token');
         if (!token) {
-          // If no token, redirect to signin
-          window.location.href = '/signin'
-          return
+          setLoading(false);
+          // The middleware will redirect, but we stop fetching if no token is found client-side.
+          return;
         }
 
         const response = await fetch('http://localhost:3000/project', {
@@ -52,10 +62,10 @@ export default function DashboardPage() {
         })
 
         if (!response.ok) {
-          // If token is invalid or expired, redirect to signin
-          localStorage.removeItem('token')
-          window.location.href = '/signin'
-          throw new Error('Failed to fetch projects or session expired')
+          // If the token is invalid (e.g., expired), the API will return 401.
+          // We log out the user.
+          handleLogout();
+          throw new Error('Session expired. Please sign in again.')
         }
 
         const data = await response.json()
@@ -72,7 +82,7 @@ export default function DashboardPage() {
 
   const handleCreateProject = async () => {
     try {
-      const token = localStorage.getItem('token')
+      const token = getCookie('token');
       if (!token) {
         throw new Error('No token found')
       }
@@ -97,11 +107,6 @@ export default function DashboardPage() {
     } catch (err: any) {
       setError(err.message)
     }
-  }
-
-  const handleLogout = () => {
-    localStorage.removeItem('token')
-    window.location.href = '/signin'
   }
 
   if (loading) {
