@@ -118,6 +118,17 @@ Este comando crea las tablas (User, Project, etc.) en tu base de datos Docker.
 pnpm --filter api exec prisma migrate dev
 ```
 
+### Paso 3.7: Visualizar la Base de Datos con Prisma Studio
+
+Prisma Studio te permite ver y editar los datos de tu base de datos de forma gráfica, directamente desde tu esquema de Prisma. Es muy útil para la exploración y gestión manual de datos.
+
+1.  Asegúrate de que tu base de datos esté corriendo (Terminal 1).
+2.  En una **NUEVA** terminal, ejecuta:
+    ```bash
+    pnpm --filter api exec prisma studio
+    ```
+3.  Se abrirá una nueva pestaña en tu navegador con la interfaz de Prisma Studio (normalmente en `http://localhost:5555`).
+
 ### Paso 4: ¡Levantar el entorno!
 
 Necesitarás tener **3 terminales abiertas** al mismo tiempo. Cada una se encargará de un servicio vital.
